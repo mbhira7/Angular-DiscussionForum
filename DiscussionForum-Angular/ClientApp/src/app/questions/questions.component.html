@@ -1,0 +1,49 @@
+<h1 class="text-center mb-4">List of questions</h1>
+
+<div class="d-flex flex-column gap-3">
+    <form asp-action="AllQuestions" class="flex-grow-1 search-container position-relative" method="get">
+        <input type="text" [(ngModel)]="questionFilter" class="w-100 py-2 px-3" placeholder="Search for questions" [ngModelOptions]="{standalone: true}"/>
+        <input type="submit" value="Search" class="search-btn position-absolute h-100 px-2" />
+    </form>
+
+    <div>
+        <div *ngFor="let question of filteredQuestions">
+            <a class="question-card" [routerLink]="['/questions', question.QuestionId]">
+                <div class="py-3 forum-border">
+                    <app-question-overview-card-component [question]="question"></app-question-overview-card-component>
+                </div>
+            </a>
+        </div>
+        <!--@foreach (var question in Model.PaginatedList)
+        {
+        <a class="question-card" asp-controller="Question" asp-action="Details" asp-route-id="@question.QuestionId">
+            <div class="py-3 forum-border">
+                <partial name="_QuestionOverviewCard" model="question" />
+            </div>
+        </a>
+        }-->
+    </div>
+
+    <!---
+    <div class="d-flex flex-column gap-2 align-items-end">
+        <div class="d-flex gap-4">
+            <a asp-action="AllQuestions" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageNr="@(Model.PaginatedList.PageNr - 1)" class="fw-bolder @previousButtonDisabled">
+                Previous
+            </a>
+            <a asp-action="AllQuestions" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageNr="@(Model.PaginatedList.PageNr + 1)" class="fw-bolder @nextButtonDisabled">
+                Next
+            </a>
+        </div>
+        <div>
+            @if (Model.PaginatedList.Count == 0)
+            {
+            <p class="small">No questions found</p>
+            }
+            else
+            {
+            <p class="small">Showing page @Model.PaginatedList.PageNr of @Model.PaginatedList.TotalPages</p>
+            }
+        </div>
+    </div>-->
+</div>
+

@@ -1,0 +1,20 @@
+<div class="d-flex gap-3">
+    <div class="user-img-container">
+        <img class="img-fluid rounded-circle" alt="User image" />
+    </div>
+
+    <div>
+        <h5 class="fw-bolder m-0">{{ question.Title }}</h5>
+
+        <p>By <span class="fw-bolder">@Model.User.UserName</span> on {{ question.Created }}</p>
+
+        <p>{{ question.Content }}</p>
+        <!--@if (Model.Replies != null)
+        {
+        <span>@Model.Replies.Count() @((Model.Replies.Count() == 1) ? "reply" : "replies")</span>
+        }
+        <small class="m-0 category py-2 px-2">@Model.Category.Title</small>-->
+    </div>
+
+</div>
+

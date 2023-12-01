@@ -1,0 +1,73 @@
+<!--<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">DiscussionForum_Angular</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        aria-label="Toggle navigation"
+        [attr.aria-expanded]="isExpanded"
+        (click)="toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+        [ngClass]="{ show: isExpanded }"
+      >
+        <ul class="navbar-nav flex-grow">
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/counter']"
+              >Counter</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
+              >Fetch data</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>--->
+
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark py-2 px-3 ">
+        <div class="container-fluid p-0">
+            <a class="navbar-brand m-0 align-items-center d-flex gap-2" [routerLink]="['/']">
+                <img class="logo" src="../assets/img/logo.png" alt="Logo image" />
+                <span class="logoText"><strong>CodeHub</strong></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mx-auto gap-4">
+                    <li class="nav-item text-uppercase">
+                        <a class="hover-underline" [routerLink]="['/questions']">Browse questions</a>
+                    </li>
+                    <li class="nav-item text-uppercase">
+                        <a class="hover-underline">My questions</a>
+                    </li>
+                    <li class="nav-item text-uppercase">
+                        <a class="hover-underline" [routerLink]="['/questionform']">Post a question</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
