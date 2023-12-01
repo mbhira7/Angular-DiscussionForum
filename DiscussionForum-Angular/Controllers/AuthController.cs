@@ -39,10 +39,15 @@ public class AuthController : Controller
 
         if (result.Succeeded)
         {
-            return Ok("Login successful");
+            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully" };
+            return Ok(response);
+        }
+        else
+        {
+            var response = new { success = false, message = "Log in failed" };
+            return Ok(response);
         }
 
-        return BadRequest("Invalid username or password");
     }
 
     [HttpPost("register")]
