@@ -11,6 +11,8 @@ import { QuestionsComponent } from "./questions/questions.component";
 import { QuestionOverviewCardComponent } from "./shared/questionOverviewCard.component";
 import { QuestionformComponent } from "./questions/questionform.component"
 import { QuestiondetailComponent } from "./questions/questiondetail.component"
+import { RegisterComponent } from "./authentication/register.component"
+import { LoginComponent } from "./authentication/login.component"
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { QuestiondetailComponent } from "./questions/questiondetail.component"
     QuestionsComponent,
     QuestionOverviewCardComponent,
     QuestionformComponent,
-    QuestiondetailComponent
+    QuestiondetailComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,6 +36,8 @@ import { QuestiondetailComponent } from "./questions/questiondetail.component"
       { path: 'questions', component: QuestionsComponent },
       { path: 'questions/:id', component: QuestiondetailComponent },
       { path: 'questionform', component: QuestionformComponent },
+      { path: 'auth/register', component: RegisterComponent },
+      { path: 'auth/login', component: LoginComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ])
   ],

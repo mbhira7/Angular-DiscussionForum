@@ -3,7 +3,7 @@ using DiscussionForum_Angular.DAL;
 using DiscussionForum_Angular.Models;
 using Serilog;
 using Serilog.Events;
-
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,17 @@ builder.Services.AddDbContext<ForumDbContext>(options => {
     options.UseSqlite(
         builder.Configuration["ConnectionStrings:ForumDbContextConnection"]);
 });
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    // Set your Identity options here
+})
+.AddEntityFrameworkStores<ForumDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<User>>();
+builder.Services.AddScoped<SignInManager<User>>();
+
 
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
@@ -39,6 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+app.UseAuthentication();
 app.UseRouting();
 
 
