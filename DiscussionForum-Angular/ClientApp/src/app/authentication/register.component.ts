@@ -27,7 +27,7 @@ export class RegisterComponent  {
           console.log(response.message)
         }
         else {
-          console.log("Question creation failed")
+          console.log("User creation failed")
         }
       })
   }

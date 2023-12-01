@@ -26,7 +26,7 @@ public class AuthController : Controller
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] User logInUser)
+    public async Task<IActionResult> Login([FromBody] UserRegister logInUser)
     {
         var user = await _userManager.FindByNameAsync(logInUser.UserName);
 
@@ -35,7 +35,7 @@ public class AuthController : Controller
             return BadRequest("Invalid username or password");
         }
 
-        var result = await _signInManager.PasswordSignInAsync(user, logInUser.PasswordHash, isPersistent: false, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(user, logInUser.Password, isPersistent: false, lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
