@@ -10,11 +10,12 @@ import { FormGroup, FormControl, Validators, FormBuilder, ReactiveFormsModule } 
 
 export class RegisterComponent  {
   registerForm: FormGroup;
+  registerStatus: string = ""
 
   constructor(private _formbuilder: FormBuilder, private _authService: AuthService) {
     this.registerForm = _formbuilder.group({
       username: ["", Validators.required],
-      password: ["", Validators.required]
+      password: ["", [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/)]]
     });
   }
 
@@ -24,11 +25,13 @@ export class RegisterComponent  {
     this._authService.register(newUser)
       .subscribe(response => {
         if (response.success) {
+          this.registerStatus = "Registered successfully"
           console.log(response.message)
         }
         else {
+          this.registerStatus = "Registration failed"
           console.log("User creation failed")
         }
-      })
+    })
   }
 }

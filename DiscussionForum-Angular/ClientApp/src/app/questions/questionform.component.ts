@@ -4,6 +4,7 @@ import { IQuestion } from "./question"
 import { Router } from "@angular/router"
 import { HttpClient } from "@angular/common/http"
 import { QuestionService } from "./questions.service"
+import { AuthService } from "../authentication/authentication.service"
 
 @Component({
   selector: "app-questionform-component",
@@ -13,10 +14,10 @@ import { QuestionService } from "./questions.service"
 export class QuestionformComponent {
   questionForm: FormGroup;
 
-  constructor(private _formbuilder: FormBuilder, private _router: Router, private _questionService: QuestionService) {
+  constructor(private _auth: AuthService, private _formbuilder: FormBuilder, private _router: Router, private _questionService: QuestionService) {
     this.questionForm = _formbuilder.group({
       title: ["", Validators.required],
-      content: ["", Validators.required]
+      content: ["", Validators.required],
     });
   }
 

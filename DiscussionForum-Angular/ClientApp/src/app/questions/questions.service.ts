@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -16,6 +15,10 @@ export class QuestionService {
 
   getQuestions(): Observable<IQuestion[]> {
     return this._http.get<IQuestion[]>(this.baseUrl);
+  }
+
+  getQuestion(id: number): Observable<IQuestion> {
+    return this._http.get<IQuestion>(`api/question/${id}`)
   }
 
   createQuestion(newItem: IQuestion): Observable<any> {

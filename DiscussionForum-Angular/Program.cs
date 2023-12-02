@@ -11,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling =
+        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
 builder.Services.AddDbContext<ForumDbContext>(options => {
     options.UseSqlite(
         builder.Configuration["ConnectionStrings:ForumDbContextConnection"]);
@@ -28,6 +34,7 @@ builder.Services.AddScoped<SignInManager<User>>();
 
 
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 
 var loggerConfiguration = new LoggerConfiguration()
     .MinimumLevel.Information() // levels: Trace < Information < Warning < Error < Fatal

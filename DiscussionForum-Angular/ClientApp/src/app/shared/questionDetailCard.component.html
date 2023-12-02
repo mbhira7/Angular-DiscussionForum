@@ -1,0 +1,18 @@
+<div class="d-flex gap-4">
+    <div class="user-img-container">
+        <img class="img-fluid rounded-circle" alt="User image" [src]="question.user.imageUrl" />
+    </div>
+    <div class="w-100">
+        <div>
+            <h6 class="fw-bolder m-0">{{ question.user.userName }}</h6>
+            <p class="mb-2">{{ question.created | date: 'dd-MM-yyyy' }}</p>
+        </div>
+        <p class="m-0">{{ question.content }}</p>
+    </div>
+</div>
+
+<style>
+    .user-img-container {
+        width: 50px;
+    }
+</style>

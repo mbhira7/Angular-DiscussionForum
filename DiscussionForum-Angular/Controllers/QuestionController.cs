@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DiscussionForum_Angular.Models;
 using DiscussionForum_Angular.DAL;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,6 +39,20 @@ public class QuestionController : Controller
         return Ok(questions);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuestionById(int id)
+    {
+        var question = await _questionRepository.GetQuestionById(id);
+
+        if (question == null)
+        {
+            _logger.LogError("[QuestionController] Question not found for the QuestionId {QuestionId: 0000}", id);
+            return NotFound("Question not found for the QuestionId");
+        }
+
+        return Ok(question);
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] Question newQuestion)
     {
@@ -45,6 +60,10 @@ public class QuestionController : Controller
         {
             return BadRequest("Invalid question data");
         }
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        newQuestion.Id = userId;
 
         bool returnOk = await _questionRepository.Create(newQuestion);
 

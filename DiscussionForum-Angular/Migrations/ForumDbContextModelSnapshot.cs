@@ -39,7 +39,8 @@ namespace DiscussionForum_Angular.Migrations
 
                     b.Property<string>("Id")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "Id");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -48,7 +49,46 @@ namespace DiscussionForum_Angular.Migrations
 
                     b.HasKey("QuestionId");
 
+                    b.HasIndex("Id");
+
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("DiscussionForum_Angular.Models.Reply", b =>
+                {
+                    b.Property<int>("ReplyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("Relational:JsonPropertyName", "ReplyId");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "Content");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "Created");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "Id");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("Relational:JsonPropertyName", "QuestionId");
+
+                    b.HasKey("ReplyId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Replies");
+
+                    b.HasAnnotation("Relational:JsonPropertyName", "Replies");
                 });
 
             modelBuilder.Entity("DiscussionForum_Angular.Models.User", b =>
@@ -64,7 +104,8 @@ namespace DiscussionForum_Angular.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "Created");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -74,7 +115,8 @@ namespace DiscussionForum_Angular.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasAnnotation("Relational:JsonPropertyName", "ImageUrl");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -119,6 +161,8 @@ namespace DiscussionForum_Angular.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasAnnotation("Relational:JsonPropertyName", "User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -249,6 +293,34 @@ namespace DiscussionForum_Angular.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DiscussionForum_Angular.Models.Question", b =>
+                {
+                    b.HasOne("DiscussionForum_Angular.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DiscussionForum_Angular.Models.Reply", b =>
+                {
+                    b.HasOne("DiscussionForum_Angular.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DiscussionForum_Angular.Models.Question", null)
+                        .WithMany("Replies")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -298,6 +370,11 @@ namespace DiscussionForum_Angular.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DiscussionForum_Angular.Models.Question", b =>
+                {
+                    b.Navigation("Replies");
                 });
 #pragma warning restore 612, 618
         }

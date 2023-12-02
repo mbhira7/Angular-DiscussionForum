@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DiscussionForum_Angular.Models;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,8 @@ public class AuthController : Controller
 
         if (result.Succeeded)
         {
-            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully" };
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully",  id = userId, username = logInUser.UserName };
             return Ok(response);
         }
         else
@@ -47,7 +49,6 @@ public class AuthController : Controller
             var response = new { success = false, message = "Log in failed" };
             return Ok(response);
         }
-
     }
 
     [HttpPost("register")]
@@ -76,7 +77,8 @@ public class AuthController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
-        return Ok("Logout successful");
+        var response = new { success = true, message = "User logged out successfully" };
+        return Ok(response);
     }
 }
 

@@ -1,20 +1,25 @@
 <div class="d-flex gap-3">
     <div class="user-img-container">
-        <img class="img-fluid rounded-circle" alt="User image" />
+        <img class="img-fluid rounded-circle" alt="User image" [src]='question.user.imageUrl'/>
     </div>
 
     <div>
-        <h5 class="fw-bolder m-0">{{ question.Title }}</h5>
+        <h5 class="fw-bolder m-0">{{ question.title }}</h5>
 
-        <p>By <span class="fw-bolder">@Model.User.UserName</span> on {{ question.Created }}</p>
+        <p>By <span class="fw-bolder">{{ question.user.userName }}</span> on {{ question.created | date: 'dd-MM-yyyy'}}</p>
 
-        <p>{{ question.Content }}</p>
-        <!--@if (Model.Replies != null)
-        {
-        <span>@Model.Replies.Count() @((Model.Replies.Count() == 1) ? "reply" : "replies")</span>
-        }
-        <small class="m-0 category py-2 px-2">@Model.Category.Title</small>-->
+        <p>{{ question.content }}</p>
+        
+        <!--<small class="m-0 category py-2 px-2">@Model.Category.Title</small>-->
+        <div *ngIf="question.replies?.length !== null">
+            <span>{{ question.replies.length }} {{ question.replies.length === 1 ? 'reply' : 'replies' }}</span>
+        </div>
     </div>
 
 </div>
 
+<style>
+    .user-img-container {
+        width: 50px;
+    }
+</style>

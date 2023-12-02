@@ -14,7 +14,7 @@
                         <a class="hover-underline" [routerLink]="['/questions']">Browse questions</a>
                     </li>
                     <li class="nav-item text-uppercase">
-                        <a class="hover-underline">My questions</a>
+                        <a class="hover-underline" [routerLink]="['/userquestions']">My questions</a>
                     </li>
                     <li class="nav-item text-uppercase">
                         <a class="hover-underline" [routerLink]="['/questionform']">Post a question</a>
@@ -23,14 +23,26 @@
 
                 <div class="loginBtn-container">
                     <ul class="navbar-nav d-flex gap-3">
-                        <li class="nav-item text-uppercase d-flex align-items-center">
-                            <a class="hover-underline" id="register" [routerLink]="['/auth/register']">Register</a>
+                        <li class="nav-item d-flex align-items-center" [ngClass]="{'text-uppercase': !loggedInUserName}">
+                            <a *ngIf="!loggedIn; else displayUserName" class="hover-underline" id="register" [routerLink]="['/auth/register']">Register</a>
+
+                            <ng-template #displayUserName>
+                                <span>Hi {{loggedInUserName}}!</span>
+                            </ng-template>
                         </li>
+
                         <li class="nav-item">
-                            <a id="login" [routerLink]="['/auth/login']">
+                            <a *ngIf="!loggedIn; else logOutBtn" id="login" [routerLink]="['/auth/login']">
                                 <button class="text-uppercase loginBtn">Log in</button>
                             </a>
+
+                            <ng-template #logOutBtn>
+                                <a id="logout">
+                                    <button class="text-uppercase loginBtn" (click)="logout()">Log out</button>
+                                </a>
+                            </ng-template>
                         </li>
+
                     </ul>
                 </div>
             </div>

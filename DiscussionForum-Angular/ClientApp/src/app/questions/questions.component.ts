@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core"
 import { IQuestion } from "./question"
+import { IUser } from "../users/user"
 import { HttpClient } from "@angular/common/http"
 import { QuestionService } from "./questions.service"
+import { UserService } from "../users/users.service"
 
 @Component({
   selector: "app-questions-component",
@@ -12,10 +14,13 @@ import { QuestionService } from "./questions.service"
 export class QuestionsComponent implements OnInit {
 
   private _questionFilter: string = ""
+
   questions: IQuestion[] = []
   filteredQuestions: IQuestion[] = this.questions;
+  userId: string = ""
+  user: IUser | undefined
 
-  constructor(private _questionService: QuestionService) { }
+  constructor(private _questionService: QuestionService, private _userService: UserService,) { }
 
   get questionFilter(): string {
     return this._questionFilter
@@ -25,21 +30,6 @@ export class QuestionsComponent implements OnInit {
     this._questionFilter = value
     this.filteredQuestions = this.performFilter(value)
   }
-
-  /*questions: IQuestion[] = [
-    {
-      "QuestionId": 1,
-      "Title": "Handling Null References in C#",
-      "Content": "I'm encountering null reference exceptions in my C# code. How can I handle them?",
-      "Created": new Date()
-    },
-    {
-      "QuestionId": 2,
-      "Title": "Entity Framework Core Best Practices",
-      "Content": "What are some best practices for using Entity Framework Core in C# projects?",
-      "Created": new Date()
-    }
-  ]*/
 
   getQuestions(): void {
     this._questionService.getQuestions()
@@ -53,7 +43,7 @@ export class QuestionsComponent implements OnInit {
   performFilter(filterBy: string): IQuestion[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.questions.filter((question: IQuestion) =>
-      question.Title.toLocaleLowerCase().includes(filterBy));
+      question.title.toLocaleLowerCase().includes(filterBy));
   }
 
   ngOnInit(): void {

@@ -1,4 +1,3 @@
-User logged in: {{loggedIn}}
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -9,4 +8,5 @@ User logged in: {{loggedIn}}
         <input type="password" id="password" class="form-control" placeholder="Enter your password" formControlName="password">
     </div>
     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Log in</button>
+    <div *ngIf="loginError !== ''" class="error-message">{{ loginError }}</div>
 </form>

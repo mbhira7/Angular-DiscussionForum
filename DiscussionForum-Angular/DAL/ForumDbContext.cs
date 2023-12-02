@@ -14,11 +14,13 @@ public class ForumDbContext : IdentityDbContext<User>
 
     public DbSet<Question> Questions { get; set; }
     public DbSet<User> ForumUsers { get; set; }
-    /*public DbSet<Reply> Replies { get; set; }
-    public DbSet<Category> Categories { get; set; }*/
+    public DbSet<Reply> Replies { get; set; }
+    //public DbSet<Category> Categories { get; set; }*/
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLazyLoadingProxies();
     }
+
+
 }

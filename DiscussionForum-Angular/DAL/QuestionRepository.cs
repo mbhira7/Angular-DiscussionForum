@@ -20,7 +20,7 @@ public class QuestionRepository : IQuestionRepository
     {
         try
         {
-            return await _db.Questions.ToListAsync();
+            return await _db.Questions.Include(q => q.User).ToListAsync();
         }
         catch (Exception e)
         {
@@ -35,30 +35,15 @@ public class QuestionRepository : IQuestionRepository
     {
         try
         {
-            return await _db.Questions.FindAsync(id);
+            return await _db.Questions.Include(q => q.User).FirstOrDefaultAsync(q => q.QuestionId == id);
         }
         catch (Exception e)
         {
-            _logger.LogError("[QuestionRepository] question FindAsync(id) failed when GetQuestionById for " +
+            _logger.LogError("[QuestionRepository] question FirstOrDefaultAsync failed when GetQuestionById for " +
                 "QuestionId {QuestionId: 0000}, error message: {e}", e.Message);
             return null;
         }
     }
-
-    //Used to retrieve a list of questions based on the provided user ID
-    /*public async Task<IEnumerable<Question>?> GetQuestionsByUserId(string id)
-    {
-        try
-        {
-            return await _db.Questions.Where(question => question.Id == id).ToListAsync();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("[QuestionRepository] question ToListAsync() failed when GetQuestionsByUserId for " +
-                "Id {Id: 0000}, error message: {e}", e.Message);
-            return null;
-        }
-    }*/
 
     //Used to retrieve the total count of questions
     public async Task<int> GetQuestionsCount()

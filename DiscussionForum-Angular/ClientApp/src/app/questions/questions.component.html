@@ -8,23 +8,15 @@
 
     <div>
         <div *ngFor="let question of filteredQuestions">
-            <a class="question-card" [routerLink]="['/questions', question.QuestionId]">
+            <a class="question-card" [routerLink]="['/questions', question.questionId]">
                 <div class="py-3 forum-border">
                     <app-question-overview-card-component [question]="question"></app-question-overview-card-component>
                 </div>
             </a>
         </div>
-        <!--@foreach (var question in Model.PaginatedList)
-        {
-        <a class="question-card" asp-controller="Question" asp-action="Details" asp-route-id="@question.QuestionId">
-            <div class="py-3 forum-border">
-                <partial name="_QuestionOverviewCard" model="question" />
-            </div>
-        </a>
-        }-->
     </div>
 
-    <!---
+    <!---Pagination
     <div class="d-flex flex-column gap-2 align-items-end">
         <div class="d-flex gap-4">
             <a asp-action="AllQuestions" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageNr="@(Model.PaginatedList.PageNr - 1)" class="fw-bolder @previousButtonDisabled">
@@ -47,3 +39,8 @@
     </div>-->
 </div>
 
+<style>
+    .forum-border {
+        border-bottom: 1px solid #2a272e;
+    }
+</style>

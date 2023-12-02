@@ -1,0 +1,32 @@
+<div class="d-flex gap-4 w-100">
+    <div class="user-img-container">
+        <img class="img-fluid rounded-circle" [src]="reply.user.imageUrl" alt="User image" />
+    </div>
+    <div class="w-100">
+        <div>
+            <h6 class="fw-bolder m-0">{{ reply.user.userName }}</h6>
+            <p class="mb-2">{{ reply.created | date: 'dd-MM-yyyy HH:mm'  }}</p>
+        </div>
+        <p id="staticContent-@Model.ReplyId" class="m-0">{{ reply.content }}</p>
+
+        <!---Edit av reply: <form style="display:none;" id="dynamicContent-@Model.ReplyId" asp-controller="Reply" asp-action="Update">
+            <input type="hidden" asp-for="@Model.ReplyId" />
+            <input type="hidden" asp-for="@Model.QuestionId" />
+
+            <div class="form-group mb-3">
+                <textarea rows="3" class="form-control py-1 px-2 w-100" asp-for="@Model.Content"></textarea>
+                <span asp-validation-for="@Model.Content" class="text-danger"></span>
+            </div>
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a id="cancelEditBtn-@Model.ReplyId" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>-->
+    </div>
+</div>
+
+<style>
+    .user-img-container {
+        width: 50px;
+    }
+</style>
