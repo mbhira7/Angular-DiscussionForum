@@ -14,6 +14,7 @@ public class ReplyRepository : IReplyRepository
         _logger = logger;
     }
 
+    //Creates a reply based on the provided reply data and returns a boolean indicating the success of the creation
     public async Task<bool> Create(Reply reply)
     {
         try

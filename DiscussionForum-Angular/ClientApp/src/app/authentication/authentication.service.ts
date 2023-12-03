@@ -5,10 +5,14 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
+
+  // Boolean flag to track user's login status
   loggedIn = false;
+
+  // Store the logged-in user's username
   loggedInUserName = "";
-  loggedInId = "";
 
   setLoggedIn(value: boolean) {
     this.loggedIn = value;
@@ -26,26 +30,22 @@ export class AuthService {
     return this.loggedInUserName;
   }
 
-  setLoggedInUserId(value: string) {
-    this.loggedInId = value;
-  }
-
-  get loggedInUserId() {
-    return this.loggedInId;
-  }
-
+  // Base URL for API endpoints related to authentication
   private baseUrl = 'api/auth';
 
   constructor(private http: HttpClient) { }
 
+  // Method to register a new user
   register(user: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/register`, user);
   }
 
+  // Method to authenticate user login
   login(user: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, user);
   }
 
+  // Method to perform user logout
   logout(): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/logout`, null);
   }

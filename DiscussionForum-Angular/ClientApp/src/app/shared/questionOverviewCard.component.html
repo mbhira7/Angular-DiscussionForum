@@ -10,7 +10,6 @@
 
         <p>{{ question.content }}</p>
         
-        <!--<small class="m-0 category py-2 px-2">@Model.Category.Title</small>-->
         <div *ngIf="question.replies?.length !== null">
             <span>{{ question.replies.length }} {{ question.replies.length === 1 ? 'reply' : 'replies' }}</span>
         </div>

@@ -9,10 +9,12 @@ import { QuestionService } from "./questions.service"
 })
 
 export class UserquestionsComponent implements OnInit {
+  // Array to hold user's questions
   questions: IQuestion[] = []
 
   constructor(private _questionService: QuestionService) { }
 
+  // Method to fetch user-specific questions
   getQuestions(): void {
     this._questionService.getUserQuestions()
       .subscribe(data => {
@@ -21,7 +23,7 @@ export class UserquestionsComponent implements OnInit {
       })
   }
 
-   ////Removes the deleted question when the deletionComplete event is emitted from the child component
+   //Removes the deleted question when the deletionComplete event is emitted from the child component (deleteModal)
   onQuestionDeleted(deletedQuestionId: number): void {
     this.questions = this.questions.filter(question => question.questionId !== deletedQuestionId);
   }

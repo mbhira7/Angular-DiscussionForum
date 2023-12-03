@@ -9,13 +9,14 @@ import { IReply } from './reply';
 
 export class ReplyService {
 
-  private baseUrl = 'api/reply/';
+  // Base URL for reply-related API endpoints
+  private baseUrl = 'api/reply';
 
   constructor(private _http: HttpClient) { }
 
+  // Creates a new reply
   createReply(newReply: IReply): Observable<any> {
-    const createUrl = 'api/reply/create';
-    return this._http.post<any>(createUrl, newReply);
+    return this._http.post<any>(`${this.baseUrl}/create`, newReply);
   }
 }
 

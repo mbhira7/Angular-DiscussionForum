@@ -24,7 +24,7 @@ public class QuestionController : Controller
         _logger = logger;
     }
 
-
+    // Retrieves all questions from the repository
     [HttpGet]
     public async Task<IActionResult> GetAllQuestions()
     {
@@ -39,6 +39,7 @@ public class QuestionController : Controller
         return Ok(questions);
     }
 
+    //Retrieves a question based on it's ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetQuestionById(int id)
     {
@@ -53,6 +54,7 @@ public class QuestionController : Controller
         return Ok(question);
     }
 
+    //Retrieves a list of questions associated with the currently logged-in user
     [HttpGet("user")]
     public async Task<IActionResult> GetQuestionsByUserId()
     {
@@ -69,6 +71,7 @@ public class QuestionController : Controller
         return Ok(questions);
     }
 
+    //Creates a new question
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] Question newQuestion)
     {
@@ -90,11 +93,13 @@ public class QuestionController : Controller
         }
         else
         {
+            _logger.LogError("[QuestionController] Question creation failed for the Question " + newQuestion.Title);
             var response = new { success = false, message = "Question creation failed" };
             return Ok(response);
         }
     }
 
+    //Updates a question
     [HttpPut("update/{id}")]
     public async Task<IActionResult> Update(Question newQuestion)
     {
@@ -115,11 +120,13 @@ public class QuestionController : Controller
         }
         else
         {
+            _logger.LogError("[QuestionController] Question update failed for the Question " + newQuestion.Title);
             var response = new { success = false, message = "Question creation failed" };
             return Ok(response);
         }
     }
 
+    //Deletes a question based on question id
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -9,35 +9,41 @@ import { IQuestion } from './question';
 
 export class QuestionService {
 
-  private baseUrl = 'api/question/';
+  // Base URL for API endpoints related to questions
+  private baseUrl = 'api/question';
 
   constructor(private _http: HttpClient) { }
 
+  // Retrieves all questions
   getQuestions(): Observable<IQuestion[]> {
     return this._http.get<IQuestion[]>(this.baseUrl);
   }
 
+  // Retrieves user-specific questions
   getUserQuestions(): Observable<IQuestion[]> {
-    return this._http.get<IQuestion[]>(`api/question/user`)
+    return this._http.get<IQuestion[]>(`${this.baseUrl}/user`)
   }
 
+  // Retrieves a specific question by ID
   getQuestion(id: number): Observable<IQuestion> {
-    return this._http.get<IQuestion>(`api/question/${id}`)
+    return this._http.get<IQuestion>(`${this.baseUrl}/${id}`)
   }
 
+  // Creates a new question
   createQuestion(newItem: IQuestion): Observable<any> {
-    const createUrl = 'api/question/create';
-    return this._http.post<any>(createUrl, newItem);
+    return this._http.post<any>(`${this.baseUrl}/create`, newItem);
   }
 
+  // Updates a question by ID
   updateQuestion(questionId: number, newQuestion: any): Observable<any> {
-    const url = `api/question/update/${questionId}`
+    const url = `${this.baseUrl}/update/${questionId}`
     newQuestion.questionId = questionId;
     return this._http.put<any>(url, newQuestion);
   }
 
+  // Deletes a question by ID
   deleteQuestion(questionId: number): Observable<any> {
-    const url = `api/question/delete/${questionId}`;
+    const url = `${this.baseUrl}/delete/${questionId}`;
     return this._http.delete(url);
   }
 }

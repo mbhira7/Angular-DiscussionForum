@@ -45,6 +45,7 @@ public class ReplyController : Controller
         }
         else
         {
+            _logger.LogError("[ReplyController] Reply creation failed for the Reply ");
             var response = new { success = false, message = "Reply creation failed", reply = newReply };
             return Ok(response);
         }

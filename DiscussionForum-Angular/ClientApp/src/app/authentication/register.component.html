@@ -1,9 +1,10 @@
+<h1 class="text-center mb-4">Registration</h1>
 <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
 
     <app-userform-component [parentForm]="registerForm"></app-userform-component>
 
     <button [disabled]="registerForm.get('username')?.invalid || registerForm.get('password')?.invalid" type="submit" class="btn btn-primary">Register</button>
-    <p class="text-danger mt-2">{{ registerStatus }}</p>
+    <p class="mt-3">{{ registerStatus }}</p>
 </form>
 
 

@@ -1,7 +1,8 @@
+<h1 class="text-center mb-4">Log in</h1>
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
    
     <app-userform-component [parentForm]="loginForm"></app-userform-component>
 
     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Log in</button>
-    <p *ngIf="loginError !== ''" class="text-danger mt-2">{{ loginError }}</p>
+    <p *ngIf="loginError !== ''" class="text-danger mt-3">{{ loginError }}</p>
 </form>

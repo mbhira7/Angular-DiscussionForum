@@ -20,7 +20,7 @@ public class QuestionRepository : IQuestionRepository
     {
         try
         {
-            return await _db.Questions.Include(q => q.User).ToListAsync();
+            return await _db.Questions.ToListAsync();
         }
         catch (Exception e)
         {
@@ -35,7 +35,7 @@ public class QuestionRepository : IQuestionRepository
     {
         try
         {
-            return await _db.Questions.Include(q => q.User).FirstOrDefaultAsync(q => q.QuestionId == id);
+            return await _db.Questions.FindAsync(id);
         }
         catch (Exception e)
         {
@@ -50,87 +50,13 @@ public class QuestionRepository : IQuestionRepository
     {
         try
         {
-            return await _db.Questions.Include(question => question.User).Where(question => question.Id == id).ToListAsync();
+            return await _db.Questions.Where(question => question.Id == id).ToListAsync();
         }
         catch (Exception e)
         {
             _logger.LogError("[QuestionRepository] question ToListAsync() failed when GetQuestionsByUserId for " +
                 "Id {Id: 0000}, error message: {e}", e.Message);
             return null;
-        }
-    }
-
-    //Used to retrieve the total count of questions
-    public async Task<int> GetQuestionsCount()
-    {
-        try
-        {
-            return await _db.Questions.CountAsync();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("[QuestionRepository] question CountAsync() failed when GetQuestionsCount, error message: {e}", e.Message);
-            return 0;
-        }
-    }
-
-    //Takes an IQueryable of questions and paginates them based on the provided page number and page size
-    private async Task<IEnumerable<Question>?> PaginateQuestions(IQueryable<Question> questions, int? pageNr, int pageSize)
-    {
-        try
-        {
-            pageNr ??= 1;
-            //Skips the questions from previous pages and takes only the questions for the current page based on the specified page size
-            questions = questions.Skip((pageNr.Value - 1) * pageSize).Take(pageSize);
-
-            return await questions.ToListAsync();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("[QuestionRepository] question ToListAsync() failed when PaginateQuestions, error message: {e}", e.Message);
-            return null;
-        }
-    }
-
-    //Returns a paginated list of all questions using the PaginateQuestions method 
-    public async Task<IEnumerable<Question>?> GetAllQuestionsPaged(int? pageNr, int pageSize)
-    {
-        try
-        {
-            var questions = from question in _db.Questions select question;
-            return await PaginateQuestions(questions, pageNr, pageSize);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("[QuestionRepository] question retrieval failed when GetAllQuestionsPaged, error message: {e}", e.Message);
-            return null;
-        }
-    }
-
-    //Filters and counts questions that match the search query and paginates the results using the PaginateQuestions method 
-    //Returns both the paginated results and the total count of matching questions
-    public async Task<(IEnumerable<Question>? Results, int Count)> GetSearchResultsPaged(string searchQuery, int? pageNr, int pageSize)
-    {
-
-        try
-        {
-            var questions = from question in _db.Questions select question;
-            int count = 0;
-
-            if (!string.IsNullOrEmpty(searchQuery))
-            {
-                searchQuery = searchQuery.ToLower();
-                questions = questions.Where(question => question.Title.ToLower().Contains(searchQuery));
-                count = await questions.CountAsync();
-            }
-
-            var pagedResults = await PaginateQuestions(questions, pageNr, pageSize);
-            return (pagedResults, count);
-        }
-        catch(Exception e)
-        {
-            _logger.LogError("[QuestionRepository] paginating question search results failed when GetSearchResultsPaged, error message: {e}", e.Message);
-            return (null, 0);
         }
     }
 

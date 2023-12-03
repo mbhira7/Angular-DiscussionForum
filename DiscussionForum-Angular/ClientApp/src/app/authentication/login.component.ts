@@ -13,38 +13,38 @@ export class LoginComponent {
   loginError:string = ""
 
   constructor(private _formbuilder: FormBuilder, private _authService: AuthService, private _router: Router) {
+
+    // Initializing the login form with form controls and validation
     this.loginForm = _formbuilder.group({
       username: ["", Validators.required],
       password: ["", Validators.required]
     });
   }
 
-  get loggedIn() {
-    return this._authService.isLoggedIn;
-  }
-
+  //Calling the login method from AuthService to authenticate the user
   loginUser() {
     const user = this.loginForm.value
 
     this._authService.login(user)
       .subscribe(response => {
         if (response.success) {
+          // If login is successful, set logged-in status and username
           this._authService.setLoggedIn(true);
-          this._authService.setLoggedInUserId(response.id);
           this._authService.setLoggedInUser(response.username);
+
           console.log("User logged in:", response.username);
           this._router.navigate(["/questions"])
+
           // Clear any previous login error message
           this.loginError = '';
         }
         else {
           this.loginError = "Login failed"
         }
-        // Handle any other logic if needed for success case
       }, error => {
         // Handle server or network errors
         console.error("Error occurred:", error);
         this.loginError = "Login failed";
-      });
+    });
   }
 }

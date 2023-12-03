@@ -19,11 +19,14 @@ export class QuestiondetailComponent implements OnInit {
 
   constructor(private _auth: AuthService, private _formbuilder: FormBuilder, private _router: Router,
     private _route: ActivatedRoute, private _questionService: QuestionService, private _replyService: ReplyService) {
+
+    // Initializing the reply form with form controls and validation
     this.replyForm = _formbuilder.group({
       content: ["", Validators.required],
     });
   }
 
+  // Method to fetch a question by its ID
   getQuestionById(id: number): void {
     this._questionService.getQuestion(id)
       .subscribe(data => {
@@ -32,6 +35,7 @@ export class QuestiondetailComponent implements OnInit {
       })
   }
 
+  // Method invoked on form submission to create a new reply
   onSubmit() {
     if (this._auth.isLoggedIn && this.question) {
       const newReply = {
@@ -46,23 +50,23 @@ export class QuestiondetailComponent implements OnInit {
             this._router.navigate(["/questions"])
           }
           else {
-            console.log(response.reply)
             console.log("Reply creation failed")
           }
         })
     }
     else {
+      // If the user is not logged in, display an alert and navigate to the login page
       alert("Log in to submit a reply");
       this._router.navigate(['auth/login']);
     }
   }
 
-
   ngOnInit(): void {
 
-    //Used to retreve the question id
+    //Used to retreve the question id from the route parameters
     const id = Number(this._route.snapshot.paramMap.get('id'));
 
+    // Fetching the question details based on the retrieved ID
     this.getQuestionById(id);
   }
  

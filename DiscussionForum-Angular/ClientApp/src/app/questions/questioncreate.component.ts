@@ -15,15 +15,19 @@ export class QuestioncreateComponent {
   questionCreateForm: FormGroup;
 
   constructor(private _auth: AuthService, private _formbuilder: FormBuilder, private _router: Router, private _questionService: QuestionService) {
+
+    // Initializing the question creation form with form controls and validation
     this.questionCreateForm = _formbuilder.group({
       title: ["", Validators.required],
       content: ["", Validators.required],
     });
   }
 
+   // Method invoked on form submission to create a new question
   onSubmit() {
     console.log(this.questionCreateForm)
 
+    // Getting user input from the form
     const newQuestion = this.questionCreateForm.value
 
     this._questionService.createQuestion(newQuestion)

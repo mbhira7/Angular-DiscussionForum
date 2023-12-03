@@ -17,35 +17,39 @@ public class AuthController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher)
+    public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AuthController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _passwordHasher = passwordHasher;
+        _logger = logger;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserRegister logInUser)
     {
+        // Finds the user by the provided username
         var user = await _userManager.FindByNameAsync(logInUser.UserName);
 
         if (user == null)
         {
-            return BadRequest("Invalid username or password");
+            _logger.LogError("[AuthController] User not found");
+            return BadRequest("Invalid log in credentials");
         }
 
+        // Attempts to sign in the user with the provided password
         var result = await _signInManager.PasswordSignInAsync(user, logInUser.Password, isPersistent: false, lockoutOnFailure: false);
 
+        // If sign-in is successful, return a success response
         if (result.Succeeded)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully",  id = userId, username = logInUser.UserName };
+            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully", username = logInUser.UserName };
             return Ok(response);
         }
         else
         {
+            // If sign-in fails, return a failure response
             var response = new { success = false, message = "Log in failed" };
             return Ok(response);
         }
@@ -54,18 +58,29 @@ public class AuthController : Controller
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegister newUser)
     {
+        if (newUser == null)
+        {
+            _logger.LogError("[AuthController] User could not be registered");
+            return BadRequest("Invalid registration data");
+        }
+
+        // Creates a new User instance with the provided username
         var user = new User
         {
             UserName = newUser.UserName,
         };
 
+        // Attempts to create the user in the system using UserManager
         var result = await _userManager.CreateAsync(user, newUser.Password);
 
+        // If creation succeeded, constructs a success response
         if (result.Succeeded)
         {
             var response = new { success = true, message = "User " + newUser.UserName + " created successfully" };
             return Ok(response);
         }
+
+        // Constructs a failure response
         else
         {
             var response = new { success = false, message = "User creation failed" };
@@ -76,9 +91,28 @@ public class AuthController : Controller
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync();
-        var response = new { success = true, message = "User logged out successfully" };
-        return Ok(response);
+        try
+        {
+            // Signs the user out 
+            await _signInManager.SignOutAsync();
+
+            // Construct a success response indicating successful user logout
+            var response = new { success = true, message = "User logged out successfully" };
+
+            // Return a 200 OK response with the success message
+            return Ok(response);
+        }
+
+        catch
+        {
+            _logger.LogError("[AuthController] User log out failed");
+
+            // Constructs an error response indicating a logout failure
+            var errorResponse = new { success = false, message = "Failed to log out user" };
+
+            // Return a server error response with the error message
+            return StatusCode(500, errorResponse); // Return a 500 Internal Server Error status code with the error message
+        }
     }
 }
 

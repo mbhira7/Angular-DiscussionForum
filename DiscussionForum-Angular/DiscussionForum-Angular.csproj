@@ -25,6 +25,7 @@
     <None Remove="ClientApp\src\app\authentication\" />
     <None Remove="ClientApp\src\app\users\" />
     <None Remove="ClientApp\src\app\replies\" />
+    <None Remove="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <Folder Include="ClientApp\src\app\authentication\" />
     <Folder Include="ClientApp\src\app\users\" />
     <Folder Include="ClientApp\src\app\replies\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />

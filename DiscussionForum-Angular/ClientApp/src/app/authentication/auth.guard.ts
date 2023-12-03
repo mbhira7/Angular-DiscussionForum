@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 import { AuthService } from "./authentication.service"
 import { Router } from '@angular/router';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-  constructor(private _auth: AuthService, private _router: Router) {
 
-  }
+//Checks if the user is logged in before accessing a route
+export class AuthGuard implements CanActivate {
+  constructor(private _auth: AuthService, private _router: Router) {}
 
   canActivate(): boolean {
     if (this._auth.isLoggedIn) {
