@@ -59,6 +59,8 @@ export class QuestiondetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    //Used to retreve the question id
     const id = Number(this._route.snapshot.paramMap.get('id'));
 
     this.getQuestionById(id);

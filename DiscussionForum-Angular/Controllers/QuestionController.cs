@@ -94,5 +94,43 @@ public class QuestionController : Controller
             return Ok(response);
         }
     }
+
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> Update(Question newQuestion)
+    {
+        if (newQuestion == null)
+        {
+            return BadRequest("Invalid question data.");
+        }
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        newQuestion.Id = userId;
+
+        bool returnOk = await _questionRepository.Update(newQuestion);
+        if (returnOk)
+        {
+            var response = new { success = true, message = "Question " + newQuestion.Title + " updated successfully" };
+            return Ok(response);
+        }
+        else
+        {
+            var response = new { success = false, message = "Question creation failed" };
+            return Ok(response);
+        }
+    }
+
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        bool returnOk = await _questionRepository.Delete(id);
+        if (!returnOk)
+        {
+            _logger.LogError("[QuestionController] Question deletion failed for the question {QuestionId:0000}", id);
+            return BadRequest("Question deletion failed");
+        }
+        var response = new { success = true, message = "Question " + id.ToString() + " deleted successfully" };
+        return Ok(response);
+    }
 }
 

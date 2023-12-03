@@ -1,12 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" placeholder="Enter your username" formControlName="username">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Enter your password" formControlName="password">
-    </div>
+   
+    <app-userform-component [parentForm]="loginForm"></app-userform-component>
+
     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Log in</button>
-    <div *ngIf="loginError !== ''" class="error-message">{{ loginError }}</div>
+    <p *ngIf="loginError !== ''" class="text-danger mt-2">{{ loginError }}</p>
 </form>

@@ -7,24 +7,24 @@ import { QuestionService } from "./questions.service"
 import { AuthService } from "../authentication/authentication.service"
 
 @Component({
-  selector: "app-questionform-component",
-  templateUrl: "./questionform.component.html",
+  selector: "app-questioncreate-component",
+  templateUrl: "./questioncreate.component.html",
 })
 
-export class QuestionformComponent {
-  questionForm: FormGroup;
+export class QuestioncreateComponent {
+  questionCreateForm: FormGroup;
 
   constructor(private _auth: AuthService, private _formbuilder: FormBuilder, private _router: Router, private _questionService: QuestionService) {
-    this.questionForm = _formbuilder.group({
+    this.questionCreateForm = _formbuilder.group({
       title: ["", Validators.required],
       content: ["", Validators.required],
     });
   }
 
   onSubmit() {
-    console.log(this.questionForm)
+    console.log(this.questionCreateForm)
 
-    const newQuestion = this.questionForm.value
+    const newQuestion = this.questionCreateForm.value
 
     this._questionService.createQuestion(newQuestion)
       .subscribe(response => {

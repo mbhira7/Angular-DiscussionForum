@@ -29,4 +29,15 @@ export class QuestionService {
     const createUrl = 'api/question/create';
     return this._http.post<any>(createUrl, newItem);
   }
+
+  updateQuestion(questionId: number, newQuestion: any): Observable<any> {
+    const url = `api/question/update/${questionId}`
+    newQuestion.questionId = questionId;
+    return this._http.put<any>(url, newQuestion);
+  }
+
+  deleteQuestion(questionId: number): Observable<any> {
+    const url = `api/question/delete/${questionId}`;
+    return this._http.delete(url);
+  }
 }

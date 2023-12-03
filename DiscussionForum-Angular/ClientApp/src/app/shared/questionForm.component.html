@@ -1,0 +1,16 @@
+<div class="form-group" [formGroup]="parentForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" formControlName="title" class="form-control px-3 py-2" />
+</div>
+
+<div class="form-group" [formGroup]="parentForm">
+    <label for="content">Content:</label>
+    <textarea formControlName="content" id="content" class="form-control px-3 py-2"></textarea>
+</div>
+
+
+<style>
+    textarea.form-control {
+        min-height: 12rem;
+    }
+</style>

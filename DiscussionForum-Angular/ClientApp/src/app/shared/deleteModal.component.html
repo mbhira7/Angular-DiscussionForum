@@ -1,4 +1,4 @@
-<div class="modal fade" [id]="'modal-' + question.questionId" tabindex="-1" [attr.aria-labelledby]="'modal-' + question.questionId" aria-hidden="true">
+<div class="modal fade" [id]="'modal-' + question.questionId" tabindex="-1" [attr.aria-labelledby]="'modal-' + question.questionId" aria-hidden="true" data-bs-backdrop="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,10 +12,10 @@
                 <h6>Are you sure you want to delete the following post?</h6>
                 <p class="fw-bolder my-3 mx-0">"{{ question.title }}"</p>
             </div>
-            <form asp-action="DeleteConfirmed" asp-route-id="@Model.QuestionId" method="post" class="modal-footer">
+            <div class="modal-footer">
                 <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+                <button type="button" class="btn btn-danger" (click)="deleteQuestion(question)">Delete</button>
+            </div>
         </div>
     </div>
 </div>

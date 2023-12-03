@@ -21,6 +21,11 @@ export class UserquestionsComponent implements OnInit {
       })
   }
 
+   ////Removes the deleted question when the deletionComplete event is emitted from the child component
+  onQuestionDeleted(deletedQuestionId: number): void {
+    this.questions = this.questions.filter(question => question.questionId !== deletedQuestionId);
+  }
+
   ngOnInit(): void {
     this.getQuestions()
   }

@@ -1,0 +1,12 @@
+<h1 class="text-center mb-3">Update question</h1>
+
+<form [formGroup]="questionUpdateForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-4">
+
+    <app-questionForm-component [parentForm]="questionUpdateForm" class="d-flex flex-column gap-4"></app-questionForm-component>
+
+    <div class="d-flex gap-3">
+        <button type="submit" [disabled]="questionUpdateForm.invalid" class="btn btn-primary">Post</button>
+        <a class="btn btn-secondary" [routerLink]="['/userquestions']">Cancel</a>
+    </div>
+</form>
+

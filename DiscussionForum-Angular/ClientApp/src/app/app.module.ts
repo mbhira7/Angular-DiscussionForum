@@ -10,7 +10,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { QuestionsComponent } from "./questions/questions.component";
 import { QuestionOverviewCardComponent } from "./shared/questionOverviewCard.component";
-import { QuestionformComponent } from "./questions/questionform.component"
+import { QuestioncreateComponent } from "./questions/questioncreate.component"
 import { QuestiondetailComponent } from "./questions/questiondetail.component"
 import { RegisterComponent } from "./authentication/register.component"
 import { LoginComponent } from "./authentication/login.component"
@@ -20,6 +20,8 @@ import { QuestionDetailCardComponent } from "./shared/questionDetailCard.compone
 import { QuestionReplyCardComponent } from "./shared/questionReplyCard.component"
 import { AuthGuard } from './authentication/auth.guard';
 import { DeleteModalComponent } from "./shared/deleteModal.component";
+import { QuestionFormComponent } from "./shared/questionForm.component"
+import { QuestionupdateComponent } from "./questions/questionupdate.component"
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { DeleteModalComponent } from "./shared/deleteModal.component";
     HomeComponent,
     QuestionsComponent,
     QuestionOverviewCardComponent,
-    QuestionformComponent,
+    QuestioncreateComponent,
     QuestiondetailComponent,
     RegisterComponent,
     LoginComponent,
@@ -36,7 +38,9 @@ import { DeleteModalComponent } from "./shared/deleteModal.component";
     UserquestionsComponent,
     QuestionReplyCardComponent,
     QuestionDetailCardComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    QuestionFormComponent,
+    QuestionupdateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,7 +52,8 @@ import { DeleteModalComponent } from "./shared/deleteModal.component";
       { path: 'questions', component: QuestionsComponent },
       { path: 'userquestions', component: UserquestionsComponent, canActivate: [AuthGuard] },
       { path: 'questions/:id', component: QuestiondetailComponent },
-      { path: 'questionform', component: QuestionformComponent, canActivate: [AuthGuard] },
+      { path: 'create', component: QuestioncreateComponent, canActivate: [AuthGuard] },
+      { path: 'edit/:id', component: QuestionupdateComponent, canActivate: [AuthGuard] },
       { path: 'auth/register', component: RegisterComponent },
       { path: 'auth/login', component: LoginComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' }

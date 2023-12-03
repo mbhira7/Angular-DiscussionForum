@@ -7,17 +7,18 @@
                 <app-question-overview-card-component [question]="question"></app-question-overview-card-component>
 
                 <div class="d-flex gap-4 fit-content">
-                    <a asp-action="Update" asp-route-id="@question.QuestionId">
+                    <a (click)="$event.stopPropagation()" [routerLink]="['/edit', question.questionId]">
                         Edit
                     </a>
-                    <a href="#" (click)="$event.stopPropagation()" [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#modal-' + question.questionId">
+                    <a href="" (click)="$event.stopPropagation()" [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#modal-' + question.questionId">
                         Delete
                     </a>
                 </div>
             </a>
         </div>
 
-        <app-deleteModal-component [question]="question"></app-deleteModal-component>
+
+        <app-deleteModal-component [question]="question" (deletionComplete)="onQuestionDeleted($event)"></app-deleteModal-component>
     </div>
 </div>
 
