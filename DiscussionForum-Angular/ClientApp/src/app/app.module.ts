@@ -19,6 +19,7 @@ import { UserquestionsComponent } from "./questions/userquestions.component"
 import { QuestionDetailCardComponent } from "./shared/questionDetailCard.component"
 import { QuestionReplyCardComponent } from "./shared/questionReplyCard.component"
 import { AuthGuard } from './authentication/auth.guard';
+import { DeleteModalComponent } from "./shared/deleteModal.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuard } from './authentication/auth.guard';
     UserformComponent,
     UserquestionsComponent,
     QuestionReplyCardComponent,
-    QuestionDetailCardComponent
+    QuestionDetailCardComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

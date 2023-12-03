@@ -1,11 +1,28 @@
 import { Component, OnInit } from "@angular/core"
+import { IQuestion } from "./question"
+import { HttpClient } from "@angular/common/http"
+import { QuestionService } from "./questions.service"
 
 @Component({
   selector: "app-userquestions-component",
   templateUrl: "./userquestions.component.html",
 })
 
-export class UserquestionsComponent  {
+export class UserquestionsComponent implements OnInit {
+  questions: IQuestion[] = []
 
+  constructor(private _questionService: QuestionService) { }
+
+  getQuestions(): void {
+    this._questionService.getUserQuestions()
+      .subscribe(data => {
+        console.log("User questions", data);
+        this.questions = data;
+      })
+  }
+
+  ngOnInit(): void {
+    this.getQuestions()
+  }
 
 }

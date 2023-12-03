@@ -53,6 +53,22 @@ public class QuestionController : Controller
         return Ok(question);
     }
 
+    [HttpGet("user")]
+    public async Task<IActionResult> GetQuestionsByUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var questions = await _questionRepository.GetQuestionsByUserId(userId);
+
+        if (questions == null)
+        {
+            _logger.LogError("[QuestionController] Question list for user not found while executing _questionRepository.GetQuestionsByUserId(userId)");
+            return NotFound("Question list not found");
+        }
+
+        return Ok(questions);
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] Question newQuestion)
     {

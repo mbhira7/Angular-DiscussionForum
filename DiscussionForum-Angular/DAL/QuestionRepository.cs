@@ -45,6 +45,21 @@ public class QuestionRepository : IQuestionRepository
         }
     }
 
+    //Used to retrieve a list of questions based on the provided user ID
+    public async Task<IEnumerable<Question>?> GetQuestionsByUserId(string id)
+    {
+        try
+        {
+            return await _db.Questions.Include(question => question.User).Where(question => question.Id == id).ToListAsync();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("[QuestionRepository] question ToListAsync() failed when GetQuestionsByUserId for " +
+                "Id {Id: 0000}, error message: {e}", e.Message);
+            return null;
+        }
+    }
+
     //Used to retrieve the total count of questions
     public async Task<int> GetQuestionsCount()
     {

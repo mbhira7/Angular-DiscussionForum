@@ -1,2 +1,32 @@
-<h1>User questions</h1>
+<h1 class="text-center mb-4">Questions posted by you</h1>
 
+<div *ngIf="questions">
+    <div *ngFor="let question of questions">
+        <div class="py-3 forum-border d-flex">
+            <a [routerLink]="['/questions', question.questionId]" class="w-100 d-flex justify-content-between question-card">
+                <app-question-overview-card-component [question]="question"></app-question-overview-card-component>
+
+                <div class="d-flex gap-4 fit-content">
+                    <a asp-action="Update" asp-route-id="@question.QuestionId">
+                        Edit
+                    </a>
+                    <a href="#" (click)="$event.stopPropagation()" [attr.data-bs-toggle]="'modal'" [attr.data-bs-target]="'#modal-' + question.questionId">
+                        Delete
+                    </a>
+                </div>
+            </a>
+        </div>
+
+        <app-deleteModal-component [question]="question"></app-deleteModal-component>
+    </div>
+</div>
+
+<style>
+    .fit-content {
+        height: fit-content;
+    }
+
+    .question-card:hover {
+        color: inherit;
+    }
+</style>
