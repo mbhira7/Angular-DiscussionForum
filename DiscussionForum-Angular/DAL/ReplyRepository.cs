@@ -30,5 +30,22 @@ public class ReplyRepository : IReplyRepository
             return false;
         }
     }
+
+    //Updates a reply based on the provided reply data and returns a boolean indicating the success of the update
+    public async Task<bool> Update(Reply reply)
+    {
+        try
+        {
+            _db.Replies.Update(reply);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("[ReplyRepository] reply SaveChangesAsync() failed when updating the ReplyId" +
+                "{ReplyId: 0000}, error message {e}", reply, e.Message);
+            return false;
+        }
+    }
 }
 

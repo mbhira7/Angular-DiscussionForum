@@ -121,7 +121,7 @@ public class QuestionController : Controller
         else
         {
             _logger.LogError("[QuestionController] Question update failed for the Question " + newQuestion.Title);
-            var response = new { success = false, message = "Question creation failed" };
+            var response = new { success = false, message = "Question update failed" };
             return Ok(response);
         }
     }

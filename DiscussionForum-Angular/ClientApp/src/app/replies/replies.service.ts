@@ -18,5 +18,12 @@ export class ReplyService {
   createReply(newReply: IReply): Observable<any> {
     return this._http.post<any>(`${this.baseUrl}/create`, newReply);
   }
+
+  // Updates a reply by ID
+  updateReply(replyId: number, newReply: any): Observable<any> {
+    const url = `${this.baseUrl}/update/${replyId}`
+    newReply.replyId = replyId;
+    return this._http.put<any>(url, newReply);
+  }
 }
 

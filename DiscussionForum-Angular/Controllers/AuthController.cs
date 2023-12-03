@@ -44,7 +44,7 @@ public class AuthController : Controller
         // If sign-in is successful, return a success response
         if (result.Succeeded)
         {
-            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully", username = logInUser.UserName };
+            var response = new { success = true, message = "User " + logInUser.UserName + " logged in successfully", username = logInUser.UserName, id = user };
             return Ok(response);
         }
         else

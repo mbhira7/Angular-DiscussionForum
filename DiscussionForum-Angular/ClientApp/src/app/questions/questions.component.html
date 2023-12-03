@@ -14,28 +14,6 @@
             </a>
         </div>
     </div>
-
-    <!---Pagination
-    <div class="d-flex flex-column gap-2 align-items-end">
-        <div class="d-flex gap-4">
-            <a asp-action="AllQuestions" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageNr="@(Model.PaginatedList.PageNr - 1)" class="fw-bolder @previousButtonDisabled">
-                Previous
-            </a>
-            <a asp-action="AllQuestions" asp-route-searchQuery="@Model.SearchQuery" asp-route-pageNr="@(Model.PaginatedList.PageNr + 1)" class="fw-bolder @nextButtonDisabled">
-                Next
-            </a>
-        </div>
-        <div>
-            @if (Model.PaginatedList.Count == 0)
-            {
-            <p class="small">No questions found</p>
-            }
-            else
-            {
-            <p class="small">Showing page @Model.PaginatedList.PageNr of @Model.PaginatedList.TotalPages</p>
-            }
-        </div>
-    </div>-->
 </div>
 
 <style>

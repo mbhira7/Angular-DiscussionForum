@@ -7,4 +7,5 @@ export interface IReply {
   questionId: number;
   id: string;
   user: IUser;
+  edit: boolean;
 }

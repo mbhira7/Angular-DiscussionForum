@@ -1,5 +1,5 @@
 <div class="my-5 border p-3 rounded-2" *ngIf="question">
-   
+
     <app-question-detail-card-component [question]="question"></app-question-detail-card-component>
 
     <div class="p-3 margin d-flex flex-column gap-3" *ngIf="question.replies">
@@ -7,15 +7,12 @@
         <div class="d-flex flex-column gap-3" *ngFor="let reply of question.replies">
            
             <div class="d-flex justify-content-between card-bg px-3 py-2 rounded-3">
-                <app-question-reply-card-component [reply]="reply"></app-question-reply-card-component>
+                <app-question-reply-card-component [reply]="reply" class="w-100"></app-question-reply-card-component>
 
-                <!--@if (Model.UserId == reply.User.Id)
-                {
-                <a class="editBtn" id="editBtn-@reply.ReplyId">Edit</a>
-                }-->
-
+                <div *ngIf="isLoggedIn && loggedInUser == reply.user.id">
+                    <a class="editBtn" id="editBtn-{{ reply.replyId }}" (click)="toggleEdit(reply)">Edit</a>
+                </div>
             </div>
-            
         </div>
         
 
@@ -24,7 +21,6 @@
 
             <div class="form-group w-100">
                 <input formControlName="content" class="py-2 px-3 w-100" placeholder="Write a reply" />
-                <span class="text-danger"></span>
             </div>
 
             <button [disabled]="replyForm.invalid" class="btn btn-primary submit-btn py-2 px-3 rounded-5" type="submit">Submit</button>

@@ -7,21 +7,17 @@
             <h6 class="fw-bolder m-0">{{ reply.user.userName }}</h6>
             <p class="mb-2">{{ reply.created | date: 'dd-MM-yyyy HH:mm'  }}</p>
         </div>
-        <p id="staticContent-@Model.ReplyId" class="m-0">{{ reply.content }}</p>
+        <p *ngIf="!reply.edit" class="m-0">{{ reply.content }}</p>
 
-        <!---Edit av reply: <form style="display:none;" id="dynamicContent-@Model.ReplyId" asp-controller="Reply" asp-action="Update">
-            <input type="hidden" asp-for="@Model.ReplyId" />
-            <input type="hidden" asp-for="@Model.QuestionId" />
-
+        <form [formGroup]="replyUpdateForm" *ngIf="reply.edit" (ngSubmit)="onSubmit()">
             <div class="form-group mb-3">
-                <textarea rows="3" class="form-control py-1 px-2 w-100" asp-for="@Model.Content"></textarea>
-                <span asp-validation-for="@Model.Content" class="text-danger"></span>
+                <textarea rows="3" formControlName="content" class="form-control py-1 px-2">{{ reply.content }}</textarea>
             </div>
             <div class="d-flex gap-3">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a id="cancelEditBtn-@Model.ReplyId" class="btn btn-secondary">Cancel</a>
+                <button type="submit" [disabled]="replyUpdateForm.invalid" class="btn btn-primary">Update</button>
+                <a class="btn btn-secondary" (click)="toggleEdit(reply)">Cancel</a>
             </div>
-        </form>-->
+        </form>
     </div>
 </div>
 

@@ -28,14 +28,15 @@ export class LoginComponent {
     this._authService.login(user)
       .subscribe(response => {
         if (response.success) {
-          // If login is successful, set logged-in status and username
+          // If login is successful, set logged-in status, id and username
           this._authService.setLoggedIn(true);
+          this._authService.setLoggedInUserId(response.id.id);
           this._authService.setLoggedInUser(response.username);
 
-          console.log("User logged in:", response.username);
+          console.log(`User ${response.username} logged in`);
           this._router.navigate(["/questions"])
 
-          // Clear any previous login error message
+          // Clears any previous login error message
           this.loginError = '';
         }
         else {

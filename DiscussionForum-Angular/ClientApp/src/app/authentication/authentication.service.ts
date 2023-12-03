@@ -13,6 +13,7 @@ export class AuthService {
 
   // Store the logged-in user's username
   loggedInUserName = "";
+  loggedInId = "";
 
   setLoggedIn(value: boolean) {
     this.loggedIn = value;
@@ -28,6 +29,14 @@ export class AuthService {
 
   get loggedInUser() {
     return this.loggedInUserName;
+  }
+
+  setLoggedInUserId(value: string) {
+    this.loggedInId = value;
+  }
+
+  get loggedInUserId() {
+    return this.loggedInId;
   }
 
   // Base URL for API endpoints related to authentication
