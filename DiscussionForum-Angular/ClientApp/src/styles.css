@@ -16,6 +16,7 @@ body {
   background: #0e0c15; /*background: #31293c;*/
   color: #fdfdfd;
   font-family: 'Inconsolata', monospace;
+  overflow: auto;
 }
 
 main {
